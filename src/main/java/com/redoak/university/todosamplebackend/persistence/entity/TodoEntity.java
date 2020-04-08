@@ -2,11 +2,15 @@ package com.redoak.university.todosamplebackend.persistence.entity;
 
 import com.redoak.university.todosamplebackend.dto.Todo;
 import com.redoak.university.todosamplebackend.dto.TodoStatus;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "TODO")
+@Getter
+@Setter
 public class TodoEntity {
 
     public TodoEntity() {}
@@ -30,37 +34,5 @@ public class TodoEntity {
         this.setTitle(todo.getTitle());
         this.setStatus(todo.getStatus());
         this.setDescription(todo.getDescription());
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public TodoStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TodoStatus status) {
-        this.status = status;
     }
 }
