@@ -58,7 +58,7 @@ public class TodoServiceTests {
     }
 
     @Test
-    public void createTodoShouldThrowExceptionWhenWrongStatusIsPassed() throws TodoCreationException {
+    public void createTodoShouldThrowExceptionWhenWrongStatusIsPassed() {
 
         //Given
         Todo todo = new Todo();
@@ -66,12 +66,12 @@ public class TodoServiceTests {
         todo.setDescription("TODO Description");
         todo.setStatus(TodoStatus.IN_PROGRESS);
 
-        //When
+        //When, Then
         Assertions.assertThrows(TodoCreationException.class, () -> todoService.createTodo(todo));
     }
 
     @Test
-    public void createTodoShouldThrowExceptionIfTitleIsDuplicated() throws TodoCreationException {
+    public void createTodoShouldThrowExceptionIfTitleIsDuplicated() {
 
         //Given
         Todo todo = new Todo();
@@ -79,14 +79,14 @@ public class TodoServiceTests {
         todo.setDescription("Description");
 
         //Returning a filled optional when searching for the title
-        when(todoRepository.findFirstByTitle("Duplicated Title")).thenReturn(Optional.of(Mockito.mock(TodoEntity.class)));
+        when(todoRepository.findFirstByTitle("Duplicated Title")).thenReturn(Optional.of(new TodoEntity()));
 
         //When
         Assertions.assertThrows(TodoCreationException.class, () -> todoService.createTodo(todo));
     }
 
     @Test
-    public void updateTodoShouldThrowExeptionIfTodoIsNotFound() throws TodoUpdateException {
+    public void updateTodoShouldThrowExeptionIfTodoIsNotFound() {
 
         //Given
         Todo todo = new Todo();
@@ -100,7 +100,7 @@ public class TodoServiceTests {
     }
 
     @Test
-    public void updateTodoShouldThrowExceptionIfNewTitleIsDuplicated() throws TodoUpdateException {
+    public void updateTodoShouldThrowExceptionIfNewTitleIsDuplicated() {
 
         //Given
         TodoEntity existingTodo = new TodoEntity();
@@ -118,12 +118,12 @@ public class TodoServiceTests {
         when(todoRepository.findById(1L)).thenReturn(Optional.of(existingTodo));
         when(todoRepository.findFirstByTitle("Duplicated Title")).thenReturn(Optional.of(todoWithDuplicatedTitle));
 
-        //When
+        //When, Then
         Assertions.assertThrows(TodoUpdateException.class, () -> todoService.updateTodo(todo, 1L));
     }
 
     @Test
-    public void updateTodoCannotTransitionFromTodoToDone() throws TodoUpdateException {
+    public void updateTodoCannotTransitionFromTodoToDone() {
 
         //Given
         TodoEntity existingTodo = new TodoEntity();
@@ -178,11 +178,18 @@ public class TodoServiceTests {
         assertEquals(TodoStatus.IN_PROGRESS, updatedTodo.getStatus(), "Status did not match in returned Todo");
     }
 
+
+
+
+
+
+
+
     @Test
     public void deleteTodoShouldCallDelete() throws TodoDeleteException {
 
         //Given
-        when(todoRepository.findById(1L)).thenReturn(Optional.of(Mockito.mock(TodoEntity.class)));
+        when(todoRepository.findById(1L)).thenReturn(Optional.of(new TodoEntity()));
 
         //When
         todoService.deleteTodo(1L);
@@ -191,8 +198,9 @@ public class TodoServiceTests {
         verify(todoRepository, times(1)).delete(any());
     }
 
+
     @Test
-    public void deleteTodoShouldThrowExceptionIfNoTodoIsFound() throws TodoDeleteException {
+    public void deleteTodoShouldThrowExceptionIfNoTodoIsFound() {
 
         //Given
         when(todoRepository.findById(1L)).thenReturn(Optional.empty());
@@ -223,7 +231,7 @@ public class TodoServiceTests {
     }
 
     @Test
-    public void getTodoShouldThrowExceptionIfNoTodoIsFound() throws TodoRequestException {
+    public void getTodoShouldThrowExceptionIfNoTodoIsFound() {
 
         //Given
         when(todoRepository.findById(1L)).thenReturn(Optional.empty());
