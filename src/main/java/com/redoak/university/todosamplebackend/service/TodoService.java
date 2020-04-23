@@ -8,12 +8,14 @@ import com.redoak.university.todosamplebackend.service.exception.TodoCreationExc
 import com.redoak.university.todosamplebackend.service.exception.TodoDeleteException;
 import com.redoak.university.todosamplebackend.service.exception.TodoRequestException;
 import com.redoak.university.todosamplebackend.service.exception.TodoUpdateException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class TodoService {
 
     @Autowired

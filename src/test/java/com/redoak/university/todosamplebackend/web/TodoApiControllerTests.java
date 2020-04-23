@@ -32,8 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Isolated Tests for the Web Layer.
  */
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(TodoController.class)
-public class TodoControllerTests {
+@WebMvcTest(TodoApiController.class)
+public class TodoApiControllerTests {
 
     @Autowired
     private MockMvc mvc;
@@ -93,7 +93,6 @@ public class TodoControllerTests {
                 .content(requestBodyString)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
         ArgumentCaptor<Todo> argCaptor = ArgumentCaptor.forClass(Todo.class);
 
         verify(todoService, times(1)).updateTodo(argCaptor.capture(), eq(1L));
@@ -102,6 +101,7 @@ public class TodoControllerTests {
         Assertions.assertNull(value.getDescription(), "Description was not null even if not passed.");
         assertNull(value.getStatus(), "Status was not null even if not passed.");
         assertEquals("Title", value.getTitle(), "Title was not the expected");
+
     }
 
 
